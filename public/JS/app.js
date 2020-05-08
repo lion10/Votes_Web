@@ -1,0 +1,19 @@
+const requestModal = document.querySelector('.new-request');
+const requestLink = document.querySelector('.add-request');
+
+// open request modal
+requestLink.addEventListener('click', () => {
+  requestModal.classList.add('open');
+});
+
+// close request modal
+requestModal.addEventListener('click', (e) => {
+    // to prevent closed when i click on the popup , 
+    //just closed after the user clicked on the target of the event
+  if (e.target.classList.contains('new-request')) {
+    requestModal.classList.remove('open');
+  }
+});
+
+
+ 
