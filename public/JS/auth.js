@@ -63,6 +63,8 @@ loginForm.addEventListener('submit',(e) => {
 });
 
 
+
+// auth listener
 firebase.auth().onAuthStateChanged((user)=>{
     if(user){
         authWrapper.classList.remove('open');
