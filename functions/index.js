@@ -34,8 +34,30 @@ exports.newUserSignUp = functions.auth.user().onCreate( user => {
 
 exports.userDeleted = functions.auth.user().onDelete( user => {
     //console.log('user deleted', user.email, user.uid);
-    
+
     //for background triggers this method must return a value/promise
     const doc = admin.firestore().collection('user').doc(user.uid);
     return doc.delete();
+});
+
+
+// http callable function ( adding a requset )
+exports.addRequest = functions.https.onCall((data, context) =>{
+    if(!context.auth){
+        throw new functions.https.HttpsError(
+            'unauthenticated',
+            'only authenticated users can add requsets'
+        )
+    }
+    if(data.text.length > 30){
+        throw new functions.https.HttpsError(
+            'invalid-argument',
+            'requset must be more than 30 characters long'
+        )
+    }
+
+    return admin.firestore().collection('requsets').add({
+        text:data.text,
+        upvotes:0,
+    })
 });
