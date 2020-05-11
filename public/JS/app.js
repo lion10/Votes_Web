@@ -32,10 +32,11 @@ requestModal.addEventListener('click', (e) => {
 
 requsetForm.addEventListener('submit', (e) =>{
   e.preventDefault();
-  
+
   const addRequset = firebase.functions().httpsCallable('addRequest');
+  
   addRequset({
-    text : requsetForm.request.value
+    text : requsetForm.request.value,
   }).then(() =>{
 
     requsetForm.reset();
