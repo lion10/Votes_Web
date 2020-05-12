@@ -44,7 +44,7 @@ exports.userDeleted = functions.auth.user().onDelete( user => {
 // http callable function ( adding a requset )
 // http callable function (adding a request)
 exports.addRequest = functions.https.onCall((data, context) => {
-    console.log('hi all ')
+   // console.log('add request')
 
     if (!context.auth) {
       throw new functions.https.HttpsError(
@@ -65,7 +65,7 @@ exports.addRequest = functions.https.onCall((data, context) => {
             upvotes: 0
         });
     }
-    
+
     return 'error';
 
 });
