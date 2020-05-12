@@ -69,3 +69,46 @@ exports.addRequest = functions.https.onCall((data, context) => {
     return 'error';
 
 });
+
+
+// upvote callable function
+
+exports.upvote =functions.https.onCall((data, context) => {
+    //data => requset collection , context(auth) => user collection
+
+    // check auth state
+    if(!context.auth){
+      throw new functions.https.HttpsError(
+        'unauthenticated', 
+        'only authenticated users can add requests'
+      );
+    }
+
+    const request = admin.firestore().collection('requests').doc(data.id);
+    const user = admin.firestore().collection('user').doc(context.auth.uid);
+    
+    return user.get().then(doc => {
+      
+      if(doc.data().upvotedOn.includes(data.id)){
+        throw new functions.https.HttpsError(
+          'failed-precondition',
+          'You can only upvote something once'
+        );
+      }
+      // update user collection array
+      // eslint-disable-next-line promise/no-nesting
+      return user.update({
+        upvotedOn : [...doc.data().upvotedOn,data,id]
+      })
+      .then( () => {
+        // update votes on the requset
+        return request.update({
+          upvotes: admin.firestore.FieldValue.increment(1)
+        });
+
+      })
+    
+    })
+
+}); 
+ 
