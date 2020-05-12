@@ -1,4 +1,4 @@
-const ref = firebase.firestore().collection('requsets');
+const ref = firebase.firestore().collection('requests');
 
 ref.onSnapshot(snapshot =>{
     let requsets = [];

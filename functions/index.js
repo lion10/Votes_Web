@@ -44,6 +44,8 @@ exports.userDeleted = functions.auth.user().onDelete( user => {
 // http callable function ( adding a requset )
 // http callable function (adding a request)
 exports.addRequest = functions.https.onCall((data, context) => {
+    console.log('hi all ')
+
     if (!context.auth) {
       throw new functions.https.HttpsError(
         'unauthenticated', 
@@ -56,9 +58,14 @@ exports.addRequest = functions.https.onCall((data, context) => {
         'request must be no more than 30 characters long'
       );
     }
-    return admin.firestore().collection('requests').add({
-      text: data.text,
-      upvotes: 0
-    });
+
+    if (context.auth && data.text.length < 30 ) {
+        return admin.firestore().collection('requests').add({
+            text: data.text,
+            upvotes: 0
+        });
+    }
     
+    return 'error';
+
 });
