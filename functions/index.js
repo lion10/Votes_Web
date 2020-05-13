@@ -73,7 +73,7 @@ exports.addRequest = functions.https.onCall((data, context) => {
 
 // upvote callable function
 
-exports.upvote =functions.https.onCall((data, context) => {
+exports.upvote =functions.https.onCall( async (data, context) => {
     //data => requset collection , context(auth) => user collection
 
     // check auth state
@@ -87,7 +87,7 @@ exports.upvote =functions.https.onCall((data, context) => {
     const request = admin.firestore().collection('requests').doc(data.id);
     const user = admin.firestore().collection('user').doc(context.auth.uid);
     
-    return user.get().then(doc => {
+    const doc = await user.get();
       
       if(doc.data().upvotedOn.includes(data.id)){
         throw new functions.https.HttpsError(
@@ -97,18 +97,16 @@ exports.upvote =functions.https.onCall((data, context) => {
       }
       // update user collection array
       // eslint-disable-next-line promise/no-nesting
-      return user.update({
+      await user.update({
         upvotedOn : [...doc.data().upvotedOn, data.id]
       })
-      .then( () => {
-        // update votes on the requset
-        return request.update({
-          upvotes: admin.firestore.FieldValue.increment(1)
-        });
 
-      })
+      // update votes on the requset
+      return request.update({
+        upvotes: admin.firestore.FieldValue.increment(1)
+      });
+
     
-    })
 
 }); 
  
