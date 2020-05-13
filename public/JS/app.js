@@ -53,4 +53,20 @@ requsetForm.addEventListener('submit', (e) =>{
 
 
 
+// notifiction
+
+const notifiction =  document.querySelector('.notification');
+
+const showNotifiction = (message) =>{
+  notifiction.textContent = message;
+  notifiction.classList.add('active');
+  setTimeout(() => {
+    notifiction.classList.remove('active');
+    notifiction.textContent = '';
+  },4000);
+}
+
+
+
+
  
