@@ -98,7 +98,7 @@ exports.upvote =functions.https.onCall((data, context) => {
       // update user collection array
       // eslint-disable-next-line promise/no-nesting
       return user.update({
-        upvotedOn : [...doc.data().upvotedOn,data,id]
+        upvotedOn : [...doc.data().upvotedOn, data.id]
       })
       .then( () => {
         // update votes on the requset

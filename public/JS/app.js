@@ -1,6 +1,6 @@
 const requestModal = document.querySelector('.new-request');
 const requestLink = document.querySelector('.add-request');
-const requsetForm = document.querySelector('.new-request form')
+const requsetForm = document.querySelector('.new-request form');
 
 
 // open request modal
