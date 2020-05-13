@@ -1,11 +1,13 @@
-# Votes_Web
+# Votes_Web (https://voters-web.web.app/)
+a simple site (login - signup - request new books which the user can upvote of the books which are needed. furthermore, the site can trigger their activities on the backend side)
 
 ## Technologies
 1) html 5
 2) css 3
 3) JavaScript
-4) Firestore (Database realtime, Functions, Hosting)
+4) Firestore (Database realtime, Functions, Hosting, Authentication)
 5) Vue.js Framework
+6) Node js 8
 
 ## problems
 1) There is an error (internal) when i add new requset that's problem just solved when i upgrade my firebase project from the spark plan to blaze plan ( need costing $$$ -_- ) 
